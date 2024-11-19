@@ -1,8 +1,10 @@
+__pycache__
+*.pyc
+.venv
 Dockerfile
+docker-compose.yml
 .dockerignore
-node_modules
-npm-debug.log
 README.md
-.next
 .git
-*.pem
+
+# add any other files and folders here

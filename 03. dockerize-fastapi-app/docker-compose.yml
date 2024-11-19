@@ -1,21 +1,14 @@
-version: '3.8'
 services:
 
-  nextjs-app:
-    image: nextjs-app
-    container_name: nextjs-app
+  fastapi-app:
+    container_name: fastapi-app
+    image: fastapi-app
     build:
       context: .
+      dockerfile: ./docker/Dockerfile 
     ports:
-      - '${APP_PORT}:${APP_PORT}'
+      - "${APP_PORT}:${APP_PORT}"
     volumes:
-      - ./app:/app
-      - node_modules:/app/node_modules # managed by docker. Restrict local yarn to get access
-      - build:/app/.next # managed by docker. Restrict local yarn to get access
+      - ./app:/app/src
     env_file:
       - .env
-
-
-volumes:
-  node_modules:
-  build:
