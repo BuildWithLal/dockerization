@@ -1,0 +1,19 @@
+FROM python:3.13-alpine
+
+WORKDIR /app
+
+COPY ./requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+RUN pip install gunicorn==23.0.0
+
+COPY ./app ./
+
+COPY gunicorn.conf.py ./
+
+COPY ./docker/entrypoint.prod.sh ./
+
+RUN chmod +x entrypoint.prod.sh
+
+ENTRYPOINT ["/bin/sh", "/app/entrypoint.prod.sh"]
