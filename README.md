@@ -1,11 +1,8 @@
 A series of step-by-step guides and examples demonstrating how to Dockerize popular web frameworks like Next.js, FastAPI, Django, and more. This repository provides ready-to-use Docker configurations, best practices, and deployment tips for containerizing applications, ensuring seamless scalability and portability across environments.
 
-Each topic is accompanied by a **YouTube tutorial** and a **Medium.com article** for a comprehensive learning experience.
-
 #### Features:
 * Step-by-Step Instructions: Clear and concise steps for setting up GitLab server and runner.
 * Docker Containers: Simplified setup using Docker for easy management and scalability.
-* YouTube Tutorials: Each topic includes a link to a corresponding YouTube video for visual learners.
 * Practical Examples: Real-world scenarios and configurations to get you up and running quickly.
 
 #### Topics Covered:
