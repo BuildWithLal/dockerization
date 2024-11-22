@@ -1,0 +1,38 @@
+build:
+  stage: build
+  image: docker
+  services:
+    - docker:27.2.0-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+  script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+    - docker build -t "$CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}" -f ./docker/Dockerfile.prod .
+    - docker push "$CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}"
+
+deploy:
+  stage: deploy
+  image:
+      name: amazon/aws-cli
+      entrypoint: [""]
+  id_tokens:
+    GITLAB_OIDC_TOKEN:
+      aud: https://gitlab.com
+  variables:
+    AWS_DEFAULT_REGION: us-east-1
+    ROLE_ARN: arn:aws:iam::379406586218:role/GitLab
+    ECS_CLUSTER: fastapi-app
+    ECS_SERVICE: fastapi-app
+    ECS_TASK_DEFINITION: fastapi-app
+  before_script:
+    - mkdir -p ~/.aws
+    - echo "${GITLAB_OIDC_TOKEN}" > /tmp/web_identity_token
+    - echo -e "[profile default]\nrole_arn=${ROLE_ARN}\nweb_identity_token_file=/tmp/web_identity_token" > ~/.aws/config
+  script:
+    - TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition "$ECS_TASK_DEFINITION")
+    - NEW_TASK_DEFINTIION=$(echo "$TASK_DEFINITION" | python ./aws/update-ecs-task.py "$CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}")
+    - aws ecs register-task-definition --cli-input-json "$NEW_TASK_DEFINTIION";
+    - aws ecs update-service --cluster $ECS_CLUSTER --service $ECS_SERVICE --task-definition $ECS_TASK_DEFINITION --force-new-deployment;
+
+
