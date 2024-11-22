@@ -1,4 +1,4 @@
-A series of step-by-step guides and examples demonstrating how to Dockerize popular web frameworks like Next.js, FastAPI, Django, and more. This repository provides ready-to-use Docker configurations, best practices, and deployment tips for containerizing applications, ensuring seamless scalability and portability across environments.
+A series of step-by-step guides and examples demonstrating how to Dockerize popular web frameworks like Next.js, FastAPI, Django, and more. We also cover how to deploy these dockerized apps to production using GitLab CI. This repository provides ready-to-use Docker configurations, GitLab CI, best practices, and deployment tips for containerizing applications, ensuring seamless scalability and portability across environments.
 
 #### Features:
 * Step-by-Step Instructions: Clear and concise steps for setting up GitLab server and runner.
@@ -9,6 +9,7 @@ A series of step-by-step guides and examples demonstrating how to Dockerize popu
 * Dockerize Next.js for Development and Production
 * Deploy Dockerized Next.js to EC2 using GitLab CI
 * Dockerize FastAPI for Development and Production
+* Deploy Dockerized FastAPI app to ECS using GitLab CI
 
 #### How to Use:
 * Clone the Repository: `git clone github.com/BuildWithLal/dockerization.git`
